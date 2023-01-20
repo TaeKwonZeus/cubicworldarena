@@ -8,9 +8,9 @@ import java.util.Properties;
 
 public final class ConfigService {
     public static @NotNull Properties getConfig() throws IOException {
-        try(InputStream stream = Thread.currentThread().getContextClassLoader()
+        try(final InputStream stream = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("config.properties")) {
-            Properties properties = new Properties();
+            final Properties properties = new Properties();
             properties.load(stream);
             return properties;
         }
