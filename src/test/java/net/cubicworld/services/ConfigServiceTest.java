@@ -8,7 +8,7 @@ import java.util.Properties;
 class ConfigServiceTest {
     @Test
     void getConfig() throws IOException {
-        final Properties properties = ConfigService.getConfig();
+        final Properties properties = new ConfigService("config.properties").getConfig();
         assert !properties.isEmpty();
     }
 }

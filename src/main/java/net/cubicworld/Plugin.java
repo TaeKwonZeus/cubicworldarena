@@ -8,7 +8,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
-public final class Plugin extends JavaPlugin implements Listener {
+public class Plugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         final PluginManager pluginManager = Bukkit.getPluginManager();

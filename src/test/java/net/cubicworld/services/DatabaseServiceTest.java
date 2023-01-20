@@ -7,7 +7,8 @@ import java.sql.Connection;
 class DatabaseServiceTest {
     @Test
     void getConnection() throws Exception {
-        try(final Connection connection = DatabaseService.getConnection(ConfigService.getConfig())) {
+        try(final Connection connection = new DatabaseService(new ConfigService("config.properties").getConfig())
+                .getConnection()) {
             assert connection.isValid(0);
             assert !connection.isClosed();
         }
