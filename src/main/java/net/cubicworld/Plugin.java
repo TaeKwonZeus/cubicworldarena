@@ -12,6 +12,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -32,6 +35,14 @@ public class Plugin extends JavaPlugin implements Listener {
             pluginSettings = Config.getConfig("config.properties");
         } catch (IOException e) {
             getLogger().log(Level.SEVERE, "Unable to get configuration file");
+            Bukkit.shutdown();
+        }
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/cubicworld?user=cubicworld&password=111111");
+            connection.close();
+        } catch (SQLException e) {
+            getLogger().log(Level.SEVERE, "Unable to connect to database", e);
             Bukkit.shutdown();
         }
     }

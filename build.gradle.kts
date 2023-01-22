@@ -1,4 +1,5 @@
 plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     java
 }
 
@@ -11,12 +12,12 @@ repositories {
 }
 
 dependencies {
+    implementation("com.mysql:mysql-connector-j:8.0.32")
+
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
-
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 java {
@@ -25,8 +26,14 @@ java {
     }
 }
 
+artifacts.archives(tasks.shadowJar)
+
 tasks {
-    test {
-        useJUnitPlatform()
+    jar {enabled = false}
+
+    shadowJar {
+        archiveFileName.set(rootProject.name + ".jar")
+        val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
+        relocate("com.mysql", "${dependencyPackage}.mysql")
     }
 }
