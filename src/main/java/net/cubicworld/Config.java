@@ -17,6 +17,4 @@ public class Config {
             return properties;
         }
     }
-
-    // TODO move hero parameters into heroparameters.json
 }

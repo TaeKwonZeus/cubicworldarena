@@ -18,6 +18,6 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
-
+        // TODO Implement player interaction
     }
 }
