@@ -1,17 +1,15 @@
-package net.cubicworld.services;
+package net.cubicworld;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-@RequiredArgsConstructor
-public class ConfigService {
-    private final String path;
-
-    public @NotNull Properties getConfig() throws IOException {
+@AllArgsConstructor
+public class Config {
+    public static @NotNull Properties getConfig(String path) throws IOException {
         try(final InputStream stream = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(path)) {
             final Properties properties = new Properties();
@@ -19,4 +17,6 @@ public class ConfigService {
             return properties;
         }
     }
+
+    // TODO move hero parameters into heroparameters.json
 }

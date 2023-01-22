@@ -1,6 +1,6 @@
-package net.cubicworld.services;
+package net.cubicworld.database;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
@@ -8,12 +8,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-@RequiredArgsConstructor
-public class DatabaseService {
+@AllArgsConstructor
+public class Database {
     private final Properties properties;
 
     public @NotNull Connection getConnection() throws SQLException {
         return DriverManager.getConnection(properties.getProperty("db.url"),
                 properties.getProperty("db.username"), properties.getProperty("db.password"));
+    }
+
+    public boolean testConnection() {
+        try (Connection connection = getConnection()) {
+            return connection.isValid(1);
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }
