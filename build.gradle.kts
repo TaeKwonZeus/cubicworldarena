@@ -1,4 +1,7 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     java
 }
 
@@ -12,6 +15,7 @@ repositories {
 
 dependencies {
     implementation("org.postgresql:postgresql:42.5.1")
+    implementation("com.zaxxer:HikariCP:5.0.1")
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 
     compileOnly("org.projectlombok:lombok:1.18.24")
@@ -26,6 +30,8 @@ java {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }

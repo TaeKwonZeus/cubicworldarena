@@ -10,11 +10,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.PluginClassLoader;
 import org.jetbrains.annotations.NotNull;
-import org.postgresql.Driver;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.BitSet;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -30,27 +32,25 @@ public class Plugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            Bukkit.getLogger().log(Level.SEVERE, "JDBC driver not found", e);
-        }
-
         registerEvents(Bukkit.getPluginManager());
         registerCommands();
 
         try {
             pluginSettings = Config.getConfig("config.properties");
         } catch (IOException e) {
-            Bukkit.getLogger().log(Level.SEVERE, "Unable to get configuration file");
+            getLogger().log(Level.SEVERE, "Unable to get configuration file");
             Bukkit.shutdown();
             return;
         }
 
         database = new Database(pluginSettings);
-        if (!database.testConnection()) {
-            Bukkit.getLogger().log(Level.SEVERE, "Unable to connect to database");
-            Bukkit.shutdown();
+        try(Connection connection = database.getConnection()) {
+            if (!connection.isValid(1)) {
+                getLogger().log(Level.SEVERE, "Database connection is invalid");
+                Bukkit.shutdown();
+            }
+        } catch (SQLException e) {
+            getLogger().log(Level.SEVERE, "Failed to connect to database", e);
         }
     }
 

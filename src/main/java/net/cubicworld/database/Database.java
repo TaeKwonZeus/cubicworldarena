@@ -1,28 +1,26 @@
 package net.cubicworld.database;
 
-import lombok.AllArgsConstructor;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.jetbrains.annotations.NotNull;
-import org.postgresql.Driver;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-@AllArgsConstructor
 public class Database {
-    private final Properties properties;
+    private final HikariDataSource dataSource;
 
-    public @NotNull Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(properties.getProperty("db.url"),
-                properties.getProperty("db.username"), properties.getProperty("db.password"));
+    public Database(Properties properties) {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(properties.getProperty("db.url"));
+        config.setUsername(properties.getProperty("db.username"));
+        config.setPassword(properties.getProperty("db.password"));
+
+        dataSource = new HikariDataSource(config);
     }
 
-    public boolean testConnection() {
-        try (Connection connection = getConnection()) {
-            return connection.isValid(1);
-        } catch (SQLException e) {
-            return false;
-        }
+    public @NotNull Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 }
