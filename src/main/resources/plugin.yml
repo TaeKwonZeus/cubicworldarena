@@ -5,3 +5,4 @@ commands:
   arena:
     description: Join an arena or create a custom one
     usage: /arena
+api-version: 1.19
