@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     implementation("com.mysql:mysql-connector-j:8.0.32")
+    implementation("com.zaxxer:HikariCP:5.0.1")
 
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 
@@ -35,5 +36,6 @@ tasks {
         archiveFileName.set(rootProject.name + ".jar")
         val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
         relocate("com.mysql", "${dependencyPackage}.mysql")
+        relocate("com.zaxxer", "${dependencyPackage}.zaxxer")
     }
 }
