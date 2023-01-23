@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
 public class PlayerListener implements Listener {
-
     @EventHandler
     public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         event.getPlayer().sendMessage(Component.text("Hello, " + event.getPlayer().getName() + "!"));

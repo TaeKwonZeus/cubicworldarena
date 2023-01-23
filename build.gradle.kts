@@ -21,19 +21,14 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
 artifacts.archives(tasks.shadowJar)
 
 tasks {
-    jar {enabled = false}
+    jar.get().enabled = false
 
     shadowJar {
-        archiveFileName.set(rootProject.name + ".jar")
         val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
         relocate("com.mysql", "${dependencyPackage}.mysql")
         relocate("com.zaxxer", "${dependencyPackage}.zaxxer")
