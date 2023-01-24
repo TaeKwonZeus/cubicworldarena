@@ -1,4 +1,4 @@
-package net.cubicworld.game;
+package net.cubicworld.matchmaking;
 
 import lombok.*;
 import org.bukkit.Material;

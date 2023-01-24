@@ -1,4 +1,4 @@
-package net.cubicworld.game;
+package net.cubicworld.matchmaking;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

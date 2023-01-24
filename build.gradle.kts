@@ -24,13 +24,4 @@ dependencies {
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
 artifacts.archives(tasks.shadowJar)
-
-tasks {
-    jar.get().enabled = false
-
-    shadowJar {
-        val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
-        relocate("com.mysql", "${dependencyPackage}.mysql")
-        relocate("com.zaxxer", "${dependencyPackage}.zaxxer")
-    }
-}
+tasks.jar.get().enabled = false

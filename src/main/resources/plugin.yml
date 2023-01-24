@@ -1,6 +1,6 @@
 name: CubicWorldArena
 version: 1.0.0
-main: net.cubicworld.Plugin
+main: net.cubicworld.ArenaPlugin
 commands:
   arena:
     description: Join an arena or create a custom one

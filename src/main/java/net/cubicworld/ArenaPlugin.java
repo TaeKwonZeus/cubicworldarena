@@ -5,7 +5,7 @@ import net.cubicworld.commands.ArenaCommand;
 import net.cubicworld.database.Database;
 import net.cubicworld.events.BlockListener;
 import net.cubicworld.events.PlayerListener;
-import net.cubicworld.game.ArenaManager;
+import net.cubicworld.matchmaking.ArenaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -20,7 +20,7 @@ import java.util.logging.Level;
 
 @SuppressWarnings("unused")
 @Getter
-public class Plugin extends JavaPlugin implements Listener {
+public class ArenaPlugin extends JavaPlugin implements Listener {
     private Properties pluginSettings;
 
     private Database database;
@@ -55,5 +55,9 @@ public class Plugin extends JavaPlugin implements Listener {
 
     private void registerCommands() {
         Objects.requireNonNull(getCommand("arena")).setExecutor(new ArenaCommand());
+    }
+
+    public static @NotNull ArenaPlugin getInstance() {
+        return JavaPlugin.getPlugin(ArenaPlugin.class);
     }
 }
