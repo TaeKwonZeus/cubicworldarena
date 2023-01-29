@@ -9,11 +9,13 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/maven-public/")
 }
 
 dependencies {
     implementation("com.mysql:mysql-connector-j:8.0.32")
     implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.11.1")
 
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 
@@ -24,4 +26,4 @@ dependencies {
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
 artifacts.archives(tasks.shadowJar)
-tasks.jar.get().enabled = false
+tasks.jar { enabled = false }

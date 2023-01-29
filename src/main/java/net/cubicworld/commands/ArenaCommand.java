@@ -1,6 +1,6 @@
 package net.cubicworld.commands;
 
-import net.cubicworld.util.MetadataUtil;
+import de.tr7zw.nbtapi.NBT;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -27,13 +27,15 @@ public class ArenaCommand implements CommandExecutor {
         return true;
     }
 
-    private Inventory getInventory(InventoryHolder inventoryHolder) {
-        ItemStack createArenaItemStack = new ItemStack(Material.GREEN_WOOL);
-        createArenaItemStack.getItemMeta().displayName(Component.text("Create arena"));
-        MetadataUtil.setTags(createArenaItemStack, "createArena");
+    private @NotNull Inventory getInventory(InventoryHolder inventoryHolder) {
+        ItemStack itemStack = new ItemStack(Material.GREEN_WOOL);
+        itemStack.getItemMeta().displayName(Component.text("Create arena"));
+        NBT.modify(itemStack, nbt -> {
+            nbt.setString("onClick", "createArena");
+        });
 
         Inventory inventory = Bukkit.createInventory(inventoryHolder, InventoryType.CHEST);
-        inventory.setItem(4, createArenaItemStack);
+        inventory.setItem(4, itemStack);
 
         return inventory;
     }
