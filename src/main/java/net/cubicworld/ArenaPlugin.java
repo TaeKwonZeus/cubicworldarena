@@ -6,7 +6,8 @@ import net.cubicworld.database.Database;
 import net.cubicworld.events.BlockListener;
 import net.cubicworld.events.InventoryListener;
 import net.cubicworld.events.PlayerListener;
-import net.cubicworld.matchmaking.ArenaManager;
+import net.cubicworld.game.ArenaImpl;
+import net.cubicworld.matchmaking.LobbyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -30,7 +31,7 @@ public class ArenaPlugin extends JavaPlugin implements Listener {
 
     private Database database;
 
-    private ArenaManager arenaManager;
+    private final LobbyManager<ArenaImpl> lobbyManager = new LobbyManager<>();
 
     @Override
     public void onEnable() {
