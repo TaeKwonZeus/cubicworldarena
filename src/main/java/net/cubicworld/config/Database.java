@@ -11,7 +11,8 @@ public class Database {
     String password;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Database(@JsonProperty("url") String url, @JsonProperty("username") String username, @JsonProperty("password") String password) {
+    public Database(@JsonProperty("url") String url, @JsonProperty("username") String username,
+                    @JsonProperty("password") String password) {
         this.url = url;
         this.username = username;
         this.password = password;
