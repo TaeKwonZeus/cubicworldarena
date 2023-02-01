@@ -2,12 +2,12 @@ package net.cubicworld;
 
 import lombok.Getter;
 import net.cubicworld.commands.ArenaCommand;
-import net.cubicworld.database.Database;
+import net.cubicworld.config.PluginConfig;
+import net.cubicworld.database.DataSource;
 import net.cubicworld.events.BlockListener;
 import net.cubicworld.events.InventoryListener;
 import net.cubicworld.events.PlayerListener;
-import net.cubicworld.game.ArenaImpl;
-import net.cubicworld.matchmaking.LobbyManager;
+import net.cubicworld.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -21,33 +21,32 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.logging.Level;
 
 @SuppressWarnings("unused")
 @Getter
 public class ArenaPlugin extends JavaPlugin implements Listener {
-    private Properties pluginSettings;
+    private PluginConfig pluginConfig;
 
-    private Database database;
+    private DataSource dataSource;
 
-    private final LobbyManager<ArenaImpl> lobbyManager = new LobbyManager<>();
+    private final GameManager gameManager = new GameManager();
 
     @Override
     public void onEnable() {
         registerEvents(Bukkit.getPluginManager(), new BlockListener(), new InventoryListener(), new PlayerListener());
-        registerCommands(Map.ofEntries(Map.entry("arena", new ArenaCommand())));
+        registerCommands(Map.of("arena", new ArenaCommand()));
 
         try {
-            pluginSettings = Config.getConfig("config.properties");
+            pluginConfig = PluginConfig.load();
         } catch (IOException e) {
-            getLogger().log(Level.SEVERE, "Unable to get configuration file");
+            getLogger().log(Level.SEVERE, "Unable to get configuration files", e);
             Bukkit.shutdown();
         }
 
         try {
-            database = new Database(pluginSettings);
-            database.validateConnection();
+            dataSource = new DataSource(pluginConfig.getDatabase());
+            dataSource.validateConnection();
         } catch (SQLException e) {
             getLogger().log(Level.SEVERE, "Unable to connect to database", e);
             Bukkit.shutdown();
@@ -58,12 +57,12 @@ public class ArenaPlugin extends JavaPlugin implements Listener {
         world.setTime(6000);
     }
 
-    private void registerEvents(@NotNull PluginManager pluginManager, Listener... listeners) {
+    private void registerEvents(@NotNull PluginManager pluginManager, Listener @NotNull ... listeners) {
         for (Listener listener : listeners)
             pluginManager.registerEvents(listener, this);
     }
 
-    private void registerCommands(Map<String, CommandExecutor> commandExecutorMap) {
+    private void registerCommands(@NotNull Map<String, CommandExecutor> commandExecutorMap) {
         for (Map.Entry<String, CommandExecutor> entry : commandExecutorMap.entrySet()) {
             Objects.requireNonNull(getCommand(entry.getKey())).setExecutor(entry.getValue());
         }

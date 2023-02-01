@@ -17,6 +17,9 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("de.tr7zw:item-nbt-api-plugin:2.11.1")
 
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.14.2")
+
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 
     compileOnly("org.projectlombok:lombok:1.18.24")

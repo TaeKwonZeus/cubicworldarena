@@ -2,20 +2,20 @@ package net.cubicworld.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import net.cubicworld.config.Database;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 
-public class Database {
+public class DataSource {
     private final HikariDataSource dataSource;
 
-    public Database(@NotNull Properties properties) {
+    public DataSource(@NotNull Database properties) {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(properties.getProperty("db.url"));
-        config.setUsername(properties.getProperty("db.username"));
-        config.setPassword(properties.getProperty("db.password"));
+        config.setJdbcUrl(properties.getUrl());
+        config.setUsername(properties.getUsername());
+        config.setPassword(properties.getPassword());
         dataSource = new HikariDataSource(config);
     }
 

@@ -1,6 +1,7 @@
 package net.cubicworld.commands;
 
 import net.cubicworld.ArenaPlugin;
+import net.cubicworld.game.GameManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,11 +18,7 @@ public class ArenaCommand implements CommandExecutor {
             return false;
         }
 
-        if (args[0].equals("create")) {
-            ArenaPlugin.getInstance().getLobbyManager().createAndJoinLobby(args[1], player);
-        } else if (args[0].equals("join")) {
-            ArenaPlugin.getInstance().getLobbyManager().joinLobby(args[1], player);
-        }
+        GameManager gameManager = ArenaPlugin.getInstance().getGameManager();
 
         return true;
     }
