@@ -39,9 +39,10 @@ public class ArenaPlugin extends JavaPlugin implements Listener {
 
         try {
             pluginConfig = PluginConfig.load();
-        } catch (IOException e) {
+        } catch (Exception e) {
             getLogger().log(Level.SEVERE, "Unable to get configuration files", e);
             Bukkit.shutdown();
+            return;
         }
 
         try {
@@ -50,6 +51,7 @@ public class ArenaPlugin extends JavaPlugin implements Listener {
         } catch (SQLException e) {
             getLogger().log(Level.SEVERE, "Unable to connect to database", e);
             Bukkit.shutdown();
+            return;
         }
 
         World world = Objects.requireNonNull(Bukkit.getWorld("world"));
