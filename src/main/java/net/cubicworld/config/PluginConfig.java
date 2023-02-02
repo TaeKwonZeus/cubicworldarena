@@ -11,7 +11,7 @@ import java.io.IOException;
 public class PluginConfig {
     private final Database database;
 
-    public static @NotNull PluginConfig load() throws IOException {
+    public static @NotNull PluginConfig load() {
         return new PluginConfig(new Database(
                 System.getenv("DB_URL"),
                 System.getenv("DB_USERNAME"),

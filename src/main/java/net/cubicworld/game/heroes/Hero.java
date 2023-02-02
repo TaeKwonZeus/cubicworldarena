@@ -1,7 +1,7 @@
 package net.cubicworld.game.heroes;
 
-import net.cubicworld.game.abilities.Ability;
+import org.jetbrains.annotations.NotNull;
 
 public interface Hero {
-    Ability getFirstAbility();
+    @NotNull Ability getFirstAbility();
 }
