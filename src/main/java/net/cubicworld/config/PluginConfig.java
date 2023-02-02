@@ -1,24 +1,21 @@
 package net.cubicworld.config;
 
-import com.fasterxml.jackson.dataformat.javaprop.JavaPropsMapper;
-import lombok.Value;
-import net.cubicworld.ArenaPlugin;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-@Value
+@Getter
+@RequiredArgsConstructor
 public class PluginConfig {
-    Database database;
+    private final Database database;
 
     public static @NotNull PluginConfig load() throws IOException {
-        ArenaPlugin plugin = ArenaPlugin.getInstance();
-
-        try(InputStream databaseStream = plugin.getResource("database.properties")) {
-            JavaPropsMapper databaseMapper = new JavaPropsMapper();
-
-            return new PluginConfig(databaseMapper.readValue(databaseStream, Database.class));
-        }
+        return new PluginConfig(new Database(
+                System.getenv("DB_URL"),
+                System.getenv("DB_USERNAME"),
+                System.getenv("DB_PASSWORD")
+        ));
     }
 }
