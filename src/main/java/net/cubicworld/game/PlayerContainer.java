@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public interface PlayerContainer {
-    @NotNull List<Player> getPlayers();
+    @NotNull List<@NotNull Player> getPlayers();
 
     void addPlayer(@NotNull Player player);
 

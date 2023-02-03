@@ -25,7 +25,7 @@ public class Game implements PlayerContainer {
     }
 
     @Override
-    public @NotNull @UnmodifiableView List<Player> getPlayers() {
+    public @NotNull @UnmodifiableView List<@NotNull Player> getPlayers() {
         return teams.stream().map(Team::getPlayers).flatMap(List::stream).toList();
     }
 

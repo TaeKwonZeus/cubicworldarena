@@ -13,6 +13,7 @@ import org.jetbrains.annotations.UnmodifiableView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -29,18 +30,24 @@ public class Team implements PlayerContainer {
     }
 
     @Override
-    public @NotNull @UnmodifiableView List<Player> getPlayers() {
-        return ids.stream().map(Bukkit::getPlayer).toList();
+    public @NotNull @UnmodifiableView List<@NotNull Player> getPlayers() {
+        return ids.stream().map(Bukkit::getPlayer).map(Objects::requireNonNull).toList();
     }
 
     @Override
     public void addPlayer(@NotNull Player player) {
-        if (!containsPlayer(player)) ids.add(player.getUniqueId());
+        if (containsPlayer(player)) return;
+
+        ids.add(player.getUniqueId());
+        player.teleport(spawn);
     }
 
     @Override
     public void removePlayer(@NotNull Player player) {
+        if (!containsPlayer(player)) return;
+
         ids.remove(player.getUniqueId());
+        player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
     }
 
     @Override
