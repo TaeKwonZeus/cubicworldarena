@@ -1,5 +1,6 @@
 package net.cubicworld.commands.game;
 
+import net.cubicworld.ArenaPlugin;
 import net.cubicworld.commands.AbstractCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -7,8 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class GameCommand extends AbstractCommand {
-    public GameCommand() {
-        super(new GameJoinSubcommand());
+    private final ArenaPlugin plugin;
+
+    public GameCommand(ArenaPlugin plugin) {
+        super(new GameCreateSubcommand(plugin), new GameJoinSubcommand(plugin));
+
+        this.plugin = plugin;
     }
 
     @Override

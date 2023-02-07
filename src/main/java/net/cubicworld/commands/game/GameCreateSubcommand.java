@@ -2,7 +2,7 @@ package net.cubicworld.commands.game;
 
 import lombok.RequiredArgsConstructor;
 import net.cubicworld.ArenaPlugin;
-import net.cubicworld.commands.ArenaCommand;
+import net.cubicworld.commands.AbstractCommand;
 import net.cubicworld.game.Game;
 import net.cubicworld.game.GameManager;
 import net.kyori.adventure.text.Component;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GameJoinSubcommand implements ArenaCommand {
+public class GameCreateSubcommand extends AbstractCommand {
     private final ArenaPlugin plugin;
 
     @Override
@@ -27,19 +27,19 @@ public class GameJoinSubcommand implements ArenaCommand {
 
         Bukkit.getScheduler().runTask(plugin, () -> {
             GameManager gameManager = plugin.getGameManager();
-            Game game = gameManager.getGame(name);
+            Game game = gameManager.addGame(name);
             if (game == null) {
-                player.sendMessage(Component.text("Game with this name doesn't exist", NamedTextColor.RED));
+                player.sendMessage(Component.text("Game with this name already exists", NamedTextColor.RED));
                 return;
             }
 
-            player.sendMessage(Component.text("Joining game...", NamedTextColor.GREEN));
+            player.sendMessage(Component.text("Game successfully created! Joining game...", NamedTextColor.GREEN));
             game.addPlayer(player);
         });
     }
 
     @Override
     public @NotNull String getName() {
-        return "join";
+        return "create";
     }
 }

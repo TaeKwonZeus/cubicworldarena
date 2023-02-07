@@ -33,7 +33,7 @@ public class ArenaPlugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         registerEvents(Bukkit.getPluginManager(), new BlockListener(), new InventoryListener(), new PlayerListener());
-        registerCommands(new GameCommand());
+        registerCommands(new GameCommand(this));
 
         try {
             pluginConfig = PluginConfig.load();
@@ -66,9 +66,5 @@ public class ArenaPlugin extends JavaPlugin implements Listener {
         for (AbstractCommand command : commands) {
             Objects.requireNonNull(getCommand(command.getName())).setExecutor(command);
         }
-    }
-
-    public static @NotNull ArenaPlugin getInstance() {
-        return JavaPlugin.getPlugin(ArenaPlugin.class);
     }
 }

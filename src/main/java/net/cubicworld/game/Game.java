@@ -1,19 +1,24 @@
 package net.cubicworld.game;
 
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Game implements PlayerContainer {
     private final World world;
     private final List<Team> teams;
 
-    public Game(String name, int n) throws IOException {
+    @Getter
+    public final String name;
+
+    public Game(String name) {
+        this.name = name;
+
         world = new WorldCreator("lobbies/" + name).environment(World.Environment.NORMAL)
                 .type(WorldType.NORMAL)
                 .createWorld();

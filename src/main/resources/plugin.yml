@@ -4,5 +4,4 @@ main: net.cubicworld.ArenaPlugin
 commands:
   game:
     description: Join a game or create one
-    usage: /game [join|create]
 api-version: 1.19

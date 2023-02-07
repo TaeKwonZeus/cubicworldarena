@@ -10,11 +10,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
@@ -24,6 +20,8 @@ public class Team implements PlayerContainer {
     private final TextColor color;
     @Getter
     private final Location spawn;
+
+    private static final List<TextColor> colors = List.of(NamedTextColor.RED, NamedTextColor.BLUE);
 
     public int size() {
         return ids.size();
@@ -55,13 +53,13 @@ public class Team implements PlayerContainer {
         return ids.contains(player.getUniqueId());
     }
 
-    @Getter
-    private static final List<TextColor> colors = List.of(NamedTextColor.RED, NamedTextColor.BLUE);
+    public static @NotNull List<Team> getTeams(@NotNull List<Location> spawns) {
+        List<TextColor> colorList = Collections.nCopies((spawns.size() + colors.size() - 1) / colors.size(), colors)
+                .stream()
+                .flatMap(List::stream)
+                .limit(spawns.size())
+                .toList();
 
-    public static @NotNull List<Team> getTeams(@NotNull List<Location> spawns) throws IOException {
-        if (spawns.size() > colors.size())
-            throw new IOException("Unable to create " + spawns.size() + "teams");
-
-        return IntStream.range(0, spawns.size()).mapToObj(i -> new Team(colors.get(i), spawns.get(i))).toList();
+        return IntStream.range(0, spawns.size()).mapToObj(i -> new Team(colorList.get(i), spawns.get(i))).toList();
     }
 }
