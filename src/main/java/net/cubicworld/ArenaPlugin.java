@@ -24,11 +24,9 @@ import java.util.logging.Level;
 @SuppressWarnings("unused")
 @Getter
 public class ArenaPlugin extends JavaPlugin implements Listener {
-    private PluginConfig pluginConfig;
-
-    private DataSource dataSource;
-
     private final GameManager gameManager = new GameManager();
+    private PluginConfig pluginConfig;
+    private DataSource dataSource;
 
     @Override
     public void onEnable() {

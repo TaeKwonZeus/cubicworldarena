@@ -24,7 +24,7 @@ public class DataSource {
     }
 
     public void validateConnection() throws SQLException {
-        try(Connection connection = getConnection()) {
+        try (Connection connection = getConnection()) {
             if (!connection.isValid(1)) throw new SQLException("Connection is invalid");
         }
     }

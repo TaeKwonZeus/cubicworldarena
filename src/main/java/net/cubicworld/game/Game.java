@@ -7,14 +7,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
 
-import java.util.*;
+import java.util.List;
 
 public class Game implements PlayerContainer {
-    private final World world;
-    private final List<Team> teams;
-
     @Getter
     public final String name;
+    private final World world;
+    private final List<Team> teams;
 
     public Game(String name) {
         this.name = name;
