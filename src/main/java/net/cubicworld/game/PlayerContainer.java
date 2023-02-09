@@ -7,7 +7,7 @@ import org.jetbrains.annotations.UnmodifiableView;
 import java.util.List;
 
 public interface PlayerContainer {
-    @NotNull @UnmodifiableView List<@NotNull Player> getPlayers();
+    @NotNull @UnmodifiableView List<Player> getPlayers();
 
     void addPlayer(@NotNull Player player);
 

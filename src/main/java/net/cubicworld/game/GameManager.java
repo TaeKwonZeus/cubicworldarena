@@ -30,11 +30,11 @@ public class GameManager {
         return games.get(name);
     }
 
-    public void leaveLobby(@NotNull Player player) {
-        for (Game game : games.values()) game.removePlayer(player);
+    public @Nullable Game getGame(@NotNull Player player) {
+        return games.values().stream().filter(game -> game.containsPlayer(player)).findFirst().orElse(null);
     }
 
-    public void removeLobby(@NotNull Game game) {
+    public void removeGame(@NotNull Game game) {
         games.values().remove(game);
     }
 }

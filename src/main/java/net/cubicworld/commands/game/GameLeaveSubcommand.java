@@ -1,7 +1,8 @@
 package net.cubicworld.commands.game;
 
+import lombok.RequiredArgsConstructor;
 import net.cubicworld.ArenaPlugin;
-import net.cubicworld.commands.AbstractCommand;
+import net.cubicworld.commands.ArenaCommand;
 import net.cubicworld.game.Game;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -10,14 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GameCommand extends AbstractCommand {
+@RequiredArgsConstructor
+public class GameLeaveSubcommand implements ArenaCommand {
     private final ArenaPlugin plugin;
-
-    public GameCommand(ArenaPlugin plugin) {
-        super(new GameCreateSubcommand(plugin), new GameJoinSubcommand(plugin));
-
-        this.plugin = plugin;
-    }
 
     @Override
     public void execute(@NotNull Player player, @NotNull List<String> args) {
@@ -27,11 +23,11 @@ public class GameCommand extends AbstractCommand {
             return;
         }
 
-        player.sendMessage(Component.text(game.getName(), NamedTextColor.GREEN));
+        game.removePlayer(player);
     }
 
     @Override
     public @NotNull String getName() {
-        return "game";
+        return "leave";
     }
 }

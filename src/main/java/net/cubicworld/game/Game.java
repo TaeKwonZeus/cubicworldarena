@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Game implements PlayerContainer {
     @Getter
-    public final String name;
+    private final String name;
     private final World world;
     private final List<Team> teams;
 
@@ -29,7 +29,7 @@ public class Game implements PlayerContainer {
     }
 
     @Override
-    public @NotNull @UnmodifiableView List<@NotNull Player> getPlayers() {
+    public @NotNull @UnmodifiableView List<Player> getPlayers() {
         return teams.stream().map(Team::getPlayers).flatMap(List::stream).toList();
     }
 
@@ -44,7 +44,7 @@ public class Game implements PlayerContainer {
 
     @Override
     public void removePlayer(@NotNull Player player) {
-        if (!getPlayers().contains(player)) return;
+        if (!containsPlayer(player)) return;
         for (Team team : teams) {
             team.removePlayer(player);
         }
