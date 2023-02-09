@@ -24,8 +24,7 @@ public abstract class AbstractCommand implements ArenaCommand, CommandExecutor {
 
     @Override
     public boolean onCommand(
-            @NotNull CommandSender sender, @NotNull Command command,
-            @NotNull String label, @NotNull String[] args) {
+            @NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         try {
             if (!(sender instanceof Player player)) return false;
 
