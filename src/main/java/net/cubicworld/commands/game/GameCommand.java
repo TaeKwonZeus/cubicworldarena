@@ -14,7 +14,9 @@ public class GameCommand extends AbstractCommand {
     private final ArenaPlugin plugin;
 
     public GameCommand(ArenaPlugin plugin) {
-        super(new GameCreateSubcommand(plugin), new GameJoinSubcommand(plugin));
+        super(
+                new GameCreateSubcommand(plugin), new GameJoinSubcommand(plugin),
+                new GameLeaveSubcommand(plugin), new GameListSubcommand(plugin));
 
         this.plugin = plugin;
     }
